@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@ResponseBody //applies to all of the methods inside the controller class
+@RequestMapping("hello") //every single methods inside should begin /hello
 public class HelloController {
 
 ////    handles request at the root
@@ -15,8 +17,8 @@ public class HelloController {
 //        return "Hello, Spring!";
 //    }
 
-    @GetMapping("goodbye")
-    @ResponseBody
+    @GetMapping("goodbye") // lives at /hello/goodbye
+//    @ResponseBody
     public String goodbye(){
         return "Goodbye, Spring!";
     }
@@ -24,8 +26,8 @@ public class HelloController {
 //    if you want a controller method that handles
 //    more than one method, say GET and POST you
 //    can use @RequestMapping
-    @RequestMapping(value = "hellogoodbye",method={RequestMethod.GET,RequestMethod.POST})
-    @ResponseBody
+    @RequestMapping(value = "hellogoodbye",method={RequestMethod.GET,RequestMethod.POST}) //lives at /hello/hellogoodbye
+//    @ResponseBody
     public String helloGoodbye(){
         return "hello goodbye";
     }
@@ -38,17 +40,17 @@ public class HelloController {
 //    }
 
 //    updated to handle Get and Post request
-    @RequestMapping(value = "hello",method = {RequestMethod.GET,RequestMethod.POST})
-    @ResponseBody
+    @RequestMapping(value = "hello",method = {RequestMethod.GET,RequestMethod.POST}) // lives at /hello/hello
+//    @ResponseBody
     public String helloWithQueryParam(@RequestParam String name){
         return "Welcome "+ name + "!";
     }
 
 //    handles path parameters of the form /hello/name
-    @GetMapping("hello/{name}")
-    @ResponseBody
+    @GetMapping("hello/{name}") // lives at hello/hello
+//    @ResponseBody
     public String helloWithPathParam(@PathVariable String name){
-        return "Hi "+name+"welcome to John's website!";
+        return "Hi "+name+" welcome to John's website!";
     }
 
 //  redirects a user
@@ -59,7 +61,7 @@ public class HelloController {
 
 //    sending form data
     @GetMapping("form")
-    @ResponseBody
+//    @ResponseBody
     public String helloForm(){
         return "<html>" +
                  "<body>" +
