@@ -30,8 +30,15 @@ public class HelloController {
         return "hello goodbye";
     }
 
-//    handles request of the form /hello?name=John
-    @GetMapping("hello")
+////    handles request of the form /hello?name=John
+//    @GetMapping("hello")
+//    @ResponseBody
+//    public String helloWithQueryParam(@RequestParam String name){
+//        return "Welcome "+ name + "!";
+//    }
+
+//    updated to handle Get and Post request
+    @RequestMapping(value = "hello",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public String helloWithQueryParam(@RequestParam String name){
         return "Welcome "+ name + "!";
@@ -40,7 +47,7 @@ public class HelloController {
 //    handles path parameters of the form /hello/name
     @GetMapping("hello/{name}")
     @ResponseBody
-    public String helloWithParam(@PathVariable String name){
+    public String helloWithPathParam(@PathVariable String name){
         return "Hi "+name+"welcome to John's website!";
     }
 
@@ -49,5 +56,20 @@ public class HelloController {
     public String redirect(){
         return  "redirect:/goodbye";
     }
+
+//    sending form data
+    @GetMapping("form")
+    @ResponseBody
+    public String helloForm(){
+        return "<html>" +
+                 "<body>" +
+                  "<form action='hello' method='post'>"+ //submit request to /hello (if method omitted the default is set to get)
+                   "<input type='text' name='name'>" +
+                   "<input type='submit' value='Greet me!'>"+
+                  "</form>" +
+                 "</body>" +
+                "</html>";
+    }
+
 
 }
