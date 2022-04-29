@@ -1,22 +1,19 @@
 package org.launchcode.hellospring.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HelloController {
 
-//    handles request at the root
-//    @GetMapping
-//    handles request at path /hello
-    @GetMapping("hello")
-    @ResponseBody
-    public String hello(){
-        return "Hello, Spring!";
-    }
+////    handles request at the root
+////    @GetMapping
+////    handles request at path /hello
+//    @GetMapping("hello")
+//    @ResponseBody
+//    public String hello(){
+//        return "Hello, Spring!";
+//    }
 
     @GetMapping("goodbye")
     @ResponseBody
@@ -32,4 +29,25 @@ public class HelloController {
     public String helloGoodbye(){
         return "hello goodbye";
     }
+
+//    handles request of the form /hello?name=John
+    @GetMapping("hello")
+    @ResponseBody
+    public String helloWithQueryParam(@RequestParam String name){
+        return "Welcome "+ name + "!";
+    }
+
+//    handles path parameters of the form /hello/name
+    @GetMapping("hello/{name}")
+    @ResponseBody
+    public String helloWithParam(@PathVariable String name){
+        return "Hi "+name+"welcome to John's website!";
+    }
+
+//  redirects a user
+    @GetMapping("redirect")
+    public String redirect(){
+        return  "redirect:/goodbye";
+    }
+
 }
