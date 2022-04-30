@@ -95,6 +95,16 @@ public class HelloController {
     @GetMapping("message")
     public static String createMessage(String name,String language){
         if(language.equals("Korean")){
+//                    "<html>" +
+//                    "<style>" +
+//                    "p    {color: yellow}" +
+//                    "</style>" +
+//                    "<body>" +
+//                    "<div>" +
+//                    "<p align='center>안녕 ${name} </p>"+
+//                    "</div>"+
+//                    "</body>" +
+//                    "</html>";
             return "안녕 "+name+"!";
         } else if(language.equals("Spanish")){
             return "Hola "+ name+"!";
