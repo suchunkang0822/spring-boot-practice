@@ -73,5 +73,39 @@ public class HelloController {
                 "</html>";
     }
 
+    @GetMapping("exercise")
+    public String exerciseFrom(){
+        return "<html>" +
+                    "<body>" +
+                        "<form action='message'>"+
+                            "<input type='text' name='name'>" +
+                                "<select name='language'>" +
+                                    "<option value='Korean'>Korean</option>" +
+                                    "<option value='Spanish'>Spanish</option>" +
+                                    "<option value='French'>French</option>" +
+                                    "<option value='German'>German</option>" +
+                                    "<option value='Italian'>Italian</option>" +
+                                "</select>" +
+                            "<input type='submit' value='Greet me!'>"+
+                        "</form>" +
+                    "</body>" +
+                "</html>";
+    }
+
+    @GetMapping("message")
+    public static String createMessage(String name,String language){
+        if(language.equals("Korean")){
+            return "안녕 "+name+"!";
+        } else if(language.equals("Spanish")){
+            return "Hola "+ name+"!";
+        } else if(language.equals("French")){
+            return "Bonjour "+ name+"!";
+        } else if (language.equals("German")){
+            return "Hallo "+ name+"!";
+        } else{
+            return "Ciao "+name+"!";
+        }
+    }
+
 
 }
