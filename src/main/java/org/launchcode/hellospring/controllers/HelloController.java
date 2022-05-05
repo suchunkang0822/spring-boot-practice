@@ -1,11 +1,16 @@
 package org.launchcode.hellospring.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
-@ResponseBody //applies to all of the methods inside the controller class
-@RequestMapping("hello") //every single methods inside should begin /hello
+//@ResponseBody //applies to all of the methods inside the controller class
+//@RequestMapping("hello") //every single methods inside should begin /hello
 public class HelloController {
 
 ////    handles request at the root
@@ -33,25 +38,27 @@ public class HelloController {
     }
 
 ////    handles request of the form /hello?name=John
+
 //    @GetMapping("hello")
 //    @ResponseBody
 //    public String helloWithQueryParam(@RequestParam String name){
 //        return "Welcome "+ name + "!";
 //    }
 
-//    updated to handle Get and Post request
-    @RequestMapping(value = "hello",method = {RequestMethod.GET,RequestMethod.POST}) // lives at /hello/hello
+////    updated to handle Get and Post request
+//
+//    @RequestMapping(value = "hello",method = {RequestMethod.GET,RequestMethod.POST}) // lives at /hello/hello
 //    @ResponseBody
-    public String helloWithQueryParam(@RequestParam String name){
-        return "Welcome "+ name + "!";
-    }
+//    public String helloWithQueryParam(@RequestParam String name){
+//        return "Welcome "+ name + "!";
+//    }
 
-//    handles path parameters of the form /hello/name
-    @GetMapping("hello/{name}") // lives at hello/hello
-//    @ResponseBody
-    public String helloWithPathParam(@PathVariable String name){
-        return "Hi "+name+" welcome to John's website!";
-    }
+////    handles path parameters of the form /hello/name
+//    @GetMapping("hello/{name}") // lives at hello/hello
+////    @ResponseBody
+//    public String helloWithPathParam(@PathVariable String name){
+//        return "Hi "+name+" welcome to John's website!";
+//    }
 
 //  redirects a user
     @GetMapping("redirect")
@@ -61,60 +68,104 @@ public class HelloController {
 
 //    sending form data
     @GetMapping("form")
-//    @ResponseBody
+//    @ResponseBody // Once we use template, we no longer use @ResponseBody
     public String helloForm(){
-        return "<html>" +
-                 "<body>" +
-                  "<form action='hello' method='post'>"+ //submit request to /hello (if method omitted the default is set to get)
-                   "<input type='text' name='name'>" +
-                   "<input type='submit' value='Greet me!'>"+
-                  "</form>" +
-                 "</body>" +
-                "</html>";
+//        return "<html>" +
+//                 "<body>" +
+//                  "<form action='hello' method='post'>"+ //submit request to /hello (if method omitted the default is set to get)
+//                   "<input type='text' name='name'>" +
+//                   "<input type='submit' value='Greet me!'>"+
+//                  "</form>" +
+//                 "</body>" +
+//                "</html>";
+        return "form";
     }
 
-    @GetMapping("exercise")
-    public String exerciseFrom(){
-        return "<html>" +
-                    "<body>" +
-                        "<form action='message'>"+
-                            "<input type='text' name='name'>" +
-                                "<select name='language'>" +
-                                    "<option value='Korean'>Korean</option>" +
-                                    "<option value='Spanish'>Spanish</option>" +
-                                    "<option value='French'>French</option>" +
-                                    "<option value='German'>German</option>" +
-                                    "<option value='Italian'>Italian</option>" +
-                                "</select>" +
-                            "<input type='submit' value='Greet me!'>"+
-                        "</form>" +
-                    "</body>" +
-                "</html>";
+    @GetMapping("coffee")
+    public String array_coffeeForm(Model model){
+        ArrayList<String> coffee = new ArrayList<>();
+        coffee.add("Capuccino");
+        coffee.add("Mocha");
+        coffee.add("Black");
+        model.addAttribute("coffeeOptions",coffee);
+        return "coffee";
     }
 
-    @GetMapping("message")
-    public static String createMessage(String name,String language){
-        if(language.equals("Korean")){
-//                    "<html>" +
-//                    "<style>" +
-//                    "p    {color: yellow}" +
-//                    "</style>" +
+
+
+//    @GetMapping("exercise")
+//    public String exerciseFrom(){
+//        return "<html>" +
 //                    "<body>" +
-//                    "<div>" +
-//                    "<p align='center>안녕 ${name} </p>"+
-//                    "</div>"+
+//                        "<form action='message'>"+
+//                            "<input type='text' name='name'>" +
+//                                "<select name='language'>" +
+//                                    "<option value='Korean'>Korean</option>" +
+//                                    "<option value='Spanish'>Spanish</option>" +
+//                                    "<option value='French'>French</option>" +
+//                                    "<option value='German'>German</option>" +
+//                                    "<option value='Italian'>Italian</option>" +
+//                                "</select>" +
+//                            "<input type='submit' value='Greet me!'>"+
+//                        "</form>" +
 //                    "</body>" +
-//                    "</html>";
-            return "안녕 "+name+"!";
-        } else if(language.equals("Spanish")){
-            return "Hola "+ name+"!";
-        } else if(language.equals("French")){
-            return "Bonjour "+ name+"!";
-        } else if (language.equals("German")){
-            return "Hallo "+ name+"!";
-        } else{
-            return "Ciao "+name+"!";
-        }
+//                "</html>";
+//    }
+//
+//    @GetMapping("message")
+//    public static String createMessage(String name,String language){
+//        if(language.equals("Korean")){
+////                    "<html>" +
+////                    "<style>" +
+////                    "p    {color: yellow}" +
+////                    "</style>" +
+////                    "<body>" +
+////                    "<div>" +
+////                    "<p align='center>안녕 ${name} </p>"+
+////                    "</div>"+
+////                    "</body>" +
+////                    "</html>";
+//            return "안녕 "+name+"!";
+//        } else if(language.equals("Spanish")){
+//            return "Hola "+ name+"!";
+//        } else if(language.equals("French")){
+//            return "Bonjour "+ name+"!";
+//        } else if (language.equals("German")){
+//            return "Hallo "+ name+"!";
+//        } else{
+//            return "Ciao "+name+"!";
+//        }
+//    }
+
+
+////////////////////////////////////////    DYAMIC TEMPLATES
+
+//    updating hello method
+//    responds to /hello?name=input
+    @RequestMapping(value = "hello",method = {RequestMethod.GET,RequestMethod.POST})
+    public String hello(@RequestParam String name,Model model){
+        String variablePassed ="Hello, "+name+"!";
+        model.addAttribute("greeting",variablePassed);
+        return "hello";
+    }
+
+//    templates can be shared across different methods
+//    responds to /hello/variable
+    @GetMapping("hello/{name}")
+    public String helloAgain(String name,Model model){
+        // can be shortened as below
+        model.addAttribute("greeting","Hello, "+name+"!");
+        return "hello";
+    }
+
+    @GetMapping("hello-list")
+    public String helloNames(Model model){
+        List<String> names = new ArrayList<>();
+        names.add("John");
+        names.add("Winnie");
+        names.add("Danny");
+        model.addAttribute("names",names);
+        return "hello-list";
     }
 
 

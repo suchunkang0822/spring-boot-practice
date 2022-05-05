@@ -7,4 +7,6 @@ quey_path_parameters - implement controller methods that handles query and path 
 
 form - implement controller that can handle a form submission
 
-class_annotations - Moved someo of the repeated method level annotations to the controller class 
+class_annotations - Moved some of the repeated method level annotations to the controller class
+
+views_dynamic/static - Updated some of the controller methods to pass values to a new template using Model obj

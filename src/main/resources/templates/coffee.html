@@ -1,0 +1,29 @@
+<!Doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<div>
+    <h3>Option 1</h3>
+    <ol>
+       <li th:each="item:${coffeeOptions}" th:text="${item}">Place Holder1</li>
+    </ol>
+</div>
+<p>*****************</p>
+<div>
+    <h3>Option 3</h3>
+    <ol th:each="item:${coffeeOptions}">
+        <li th:text="${item}">Place Holder</li>
+    </ol>
+</div>
+<p>*****************</p>
+<div th:each="item:${coffeeOptions}">
+    <h3>Option 2</h3>
+    <ol>
+        <li th:text="${item}">Place Holder</li>
+    </ol>
+</div>
+</body>
+</html>
